@@ -13,6 +13,7 @@ class BookDefinitionsList extends StatelessWidget {
       itemBuilder: (ctx, index) => BookDefinitionItem(
         this.bookDefinitionsList[index].title,
         this.bookDefinitionsList[index].definition,
+        this.bookDefinitionsList[index].encounters,
       ),
       itemCount: this.bookDefinitionsList.length,
     );

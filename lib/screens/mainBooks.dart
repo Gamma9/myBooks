@@ -13,8 +13,8 @@ class MainBooks extends StatelessWidget {
       title: 'The Better Angels Of Our Nature',
       imageUrl: null,
       author: 'Steven Pinker',
+      datePublished: "12/20/2011",
       category: Category.Nonfiction,
-      // imageUrl: "",
       pages: 864,
     ),
   ];
