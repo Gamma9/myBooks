@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mybooks/model/definition.dart';
 
 class BookDefinitionItem extends StatelessWidget {
-  final String bookTitle;
-  final String bookDefinition;
-  final int encounters;
+  final Definition definition;
 
-  BookDefinitionItem(this.bookTitle, this.bookDefinition, this.encounters);
+  BookDefinitionItem(this.definition);
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +22,16 @@ class BookDefinitionItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                "Test",
+                this.definition.title.toString(),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text('Encounters: ${this.encounters.toString()}'),
+              Text('Encounters: ${this.definition.encounters.toString()}'),
             ],
           ),
-          Text("Test")
+          Text(this.definition.description.toString())
         ],
       ),
     );

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mybooks/screens/bookDefinitionsScreen.dart';
+import 'package:mybooks/screens/auth/loginScreen.dart';
+import 'package:mybooks/screens/definitionsScreen.dart';
 
 // Screens
-import 'package:mybooks/screens/misc/notifications.dart';
-import 'package:mybooks/screens/misc/settings.dart';
+import 'package:mybooks/screens/misc/notificationsScreen.dart';
+import 'package:mybooks/screens/misc/settingsScreen.dart';
+
+const iconColor = Colors.deepPurple;
 
 class DrawerItems extends StatelessWidget {
   @override
@@ -28,11 +31,21 @@ class DrawerItems extends StatelessWidget {
       );
     }
 
+    void logout() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return LoginScreen();
+          },
+        ),
+      );
+    }
+
     void navToDefinitions() {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) {
-            return BookDefinitionsScreen();
+            return DefinitionsScreen();
           },
         ),
       );
@@ -57,19 +70,37 @@ class DrawerItems extends StatelessWidget {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.notifications),
+          leading: Icon(
+            Icons.text_rotate_vertical,
+            color: iconColor,
+          ),
           title: Text('Definitions'),
           onTap: () => navToDefinitions(),
         ),
         ListTile(
-          leading: Icon(Icons.notifications),
+          leading: Icon(
+            Icons.notifications,
+            color: iconColor,
+          ),
           title: Text('Notifications'),
           onTap: () => navToNotifications(),
         ),
         ListTile(
-          leading: Icon(Icons.person),
+          leading: Icon(
+            Icons.person,
+            color: iconColor,
+          ),
           title: Text('Settings'),
           onTap: () => navToSettings(),
+        ),
+        Divider(),
+        ListTile(
+          leading: Icon(
+            Icons.highlight_off,
+            color: Colors.red,
+          ),
+          title: Text('Logout'),
+          onTap: () => {logout()},
         ),
       ],
     );

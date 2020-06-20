@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class Definition {
   String id;
   String title;
-  String definition;
+  String description;
   int encounters;
 
   Definition({
     @required String id,
     @required String title,
-    @required String definition,
+    @required String description,
     @required int encounters,
   });
 }

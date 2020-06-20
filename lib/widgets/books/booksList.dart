@@ -15,7 +15,9 @@ class BooksList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (ctx, index) {
-        return BookItem(this.books[index]);
+        return BookItem(
+          this.books[index],
+        );
       },
       itemCount: this.books.length,
     );

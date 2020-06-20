@@ -8,6 +8,9 @@ class SettingsScreen extends StatelessWidget {
         title: Text('Settings'),
         centerTitle: true,
       ),
+      body: ListView(
+        children: <Widget>[Text('Tets')],
+      ),
     );
   }
 }

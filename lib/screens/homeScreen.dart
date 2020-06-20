@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 // Screens
-import 'package:mybooks/screens/books.dart';
-import 'package:mybooks/screens/mainBooks.dart';
-import 'package:mybooks/screens/newBook.dart';
-import 'package:mybooks/screens/userProfile.dart';
+import 'package:mybooks/screens/booksScreen.dart';
+import 'package:mybooks/screens/mainBooksScreen.dart';
+import 'package:mybooks/screens/newBookScreen.dart';
+import 'package:mybooks/screens/userProfileScreen.dart';
 import 'package:mybooks/widgets/drawerItems.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   String _dropdownVal = 'One';
+  bool nfcStatus;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,7 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void displayQuickSettings() {}
+  String activateNFC() {
+    setState(() {
+      this.nfcStatus = !this.nfcStatus;
+    });
+    if (this.nfcStatus == false) {
+      return 'OFF';
+    } else if (this.nfcStatus == true) {
+      return 'ON';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('Settings'),
               ),
               const PopupMenuItem<String>(
-                value: "Testing",
-                child: Text('Testing'),
+                value: "ON",
+                child: Text('Turn On NFC (OFF)'),
               ),
               const PopupMenuItem<String>(
                 value: "Testing 2",

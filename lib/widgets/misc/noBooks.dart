@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NoDefinitions extends StatelessWidget {
+class NoBooks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -10,7 +10,7 @@ class NoDefinitions extends StatelessWidget {
           CircleAvatar(
             minRadius: 36,
             child: Icon(
-              Icons.wb_auto,
+              Icons.book,
               size: 32,
             ),
           ),
@@ -18,7 +18,7 @@ class NoDefinitions extends StatelessWidget {
             height: 16,
           ),
           Text(
-            'No Definitions',
+            'No Books',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

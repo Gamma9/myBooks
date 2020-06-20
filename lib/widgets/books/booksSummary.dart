@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 // Screens
-import 'package:mybooks/screens/bookDefinitionsScreen.dart';
+import 'package:mybooks/screens/definitionsScreen.dart';
 
 class BooksSummary extends StatelessWidget {
   void navToDefinitions(ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
         builder: (_) {
-          return BookDefinitionsScreen();
+          return DefinitionsScreen();
         },
       ),
     );

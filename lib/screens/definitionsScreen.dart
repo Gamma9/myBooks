@@ -7,12 +7,24 @@ import 'package:mybooks/model/definition.dart';
 import 'package:mybooks/widgets/definitions/bookDefinitionsList.dart';
 import 'package:mybooks/widgets/misc/noDefinitions.dart';
 
-class BookDefinitionsScreen extends StatelessWidget {
+class DefinitionsScreen extends StatelessWidget {
   final List<Definition> bookDefinitionsList = [
     Definition(
       id: "1",
       title: "Sporadic",
-      definition: "Testing",
+      description: "Testing",
+      encounters: 0,
+    ),
+    Definition(
+      id: "1",
+      title: "Testing",
+      description: "This is a test",
+      encounters: 0,
+    ),
+    Definition(
+      id: "1",
+      title: "Sporadic",
+      description: "Testing",
       encounters: 0,
     ),
   ];

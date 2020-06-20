@@ -22,63 +22,71 @@ class BookItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
+      child: Column(
         children: <Widget>[
-          GestureDetector(
-            child: Container(
-              height: 150,
-              width: 100,
-              child: Card(
-                elevation: 6,
-                child: this.book.imageUrl == null
-                    ? Container(
-                        color: Theme.of(context).primaryColorLight,
-                        child: Center(
-                          child: Icon(Icons.photo),
-                        ),
-                      )
-                    : FittedBox(
-                        fit: BoxFit.cover,
-                        child: Image.network(this.book.imageUrl),
-                      ),
-              ),
-            ),
-            onTap: () => navToBookDetail(context, this.book),
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Expanded(
-            child: GestureDetector(
-              child: Card(
-                elevation: 2,
+          Row(
+            children: <Widget>[
+              GestureDetector(
                 child: Container(
                   height: 150,
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        this.book.title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                      Text(
-                        this.book.author,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('${this.book.pages.toString()} pages'),
-                      Text('Category'),
-                    ],
+                  width: 100,
+                  child: Card(
+                    elevation: 6,
+                    child: this.book.imageUrl == null
+                        ? Container(
+                            color: Theme.of(context).primaryColorLight,
+                            child: Center(
+                              child: Icon(Icons.photo),
+                            ),
+                          )
+                        : FittedBox(
+                            fit: BoxFit.cover,
+                            child: Image.network(this.book.imageUrl),
+                          ),
                   ),
                 ),
+                onTap: () => navToBookDetail(context, this.book),
               ),
-              onTap: () => navToBookDetail(context, this.book),
-            ),
+              SizedBox(
+                width: 8,
+              ),
+              Expanded(
+                child: GestureDetector(
+                  child: Card(
+                    elevation: 2,
+                    child: Container(
+                      height: 175,
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            this.book.title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Text(
+                            this.book.author,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text('${this.book.pages.toString()} pages'),
+                          Text(this.book.category.toString()),
+                          Text(this.book.status.toString()),
+                        ],
+                      ),
+                    ),
+                  ),
+                  onTap: () => navToBookDetail(context, this.book),
+                ),
+              ),
+            ],
           ),
+          SizedBox(
+            height: 16,
+          )
         ],
       ),
     );

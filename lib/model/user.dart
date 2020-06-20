@@ -7,7 +7,7 @@ class User {
   String lastname;
   String username;
   List<Book> books;
-  int booksRead;
+  List<Book> booksRead;
   String favBook;
   String dob;
 
@@ -21,4 +21,8 @@ class User {
     @required this.favBook,
     @required this.dob,
   });
+
+  int get totalBooksRead {
+    return this.booksRead.length;
+  }
 }

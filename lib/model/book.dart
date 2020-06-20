@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mybooks/model/definition.dart';
 
 enum Category {
   Nonfiction,
@@ -8,6 +9,8 @@ enum Category {
   Business,
 }
 
+enum Status { Completed, Active, Nonactive }
+
 class Book {
   String id;
   String title;
@@ -15,7 +18,12 @@ class Book {
   String imageUrl;
   String datePublished;
   Category category;
+  String categoryStr;
+  Status status;
+  String statusStr;
   int pages;
+  List<Definition> definitions;
+  String summary;
   String notes;
   String ideas;
 
@@ -25,7 +33,16 @@ class Book {
     @required this.author,
     @required this.imageUrl,
     @required this.datePublished,
+    @required this.status,
+    @required this.summary,
+    @required this.notes,
+    @required this.ideas,
     @required this.category,
+    @required this.definitions,
     @required this.pages,
   });
+
+  void set bookCategory(Category category) {}
+
+  void set bookStatus(Status status) {}
 }

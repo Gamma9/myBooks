@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NoDefinitions extends StatelessWidget {
+class NoNotifications extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -10,7 +10,7 @@ class NoDefinitions extends StatelessWidget {
           CircleAvatar(
             minRadius: 36,
             child: Icon(
-              Icons.wb_auto,
+              Icons.notifications_off,
               size: 32,
             ),
           ),
@@ -18,7 +18,7 @@ class NoDefinitions extends StatelessWidget {
             height: 16,
           ),
           Text(
-            'No Definitions',
+            'No Notifications',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

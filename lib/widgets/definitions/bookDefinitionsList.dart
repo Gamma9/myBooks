@@ -10,11 +10,11 @@ class BookDefinitionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemBuilder: (ctx, index) => BookDefinitionItem(
-        this.bookDefinitionsList[index].title,
-        this.bookDefinitionsList[index].definition,
-        this.bookDefinitionsList[index].encounters,
-      ),
+      itemBuilder: (ctx, index) {
+        return BookDefinitionItem(
+          this.bookDefinitionsList[index],
+        );
+      },
       itemCount: this.bookDefinitionsList.length,
     );
   }

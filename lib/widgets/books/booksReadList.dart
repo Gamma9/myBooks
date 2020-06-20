@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mybooks/model/book.dart';
 import 'package:mybooks/widgets/books/bookItem.dart';
+import 'package:mybooks/widgets/misc/noBooks.dart';
 
 class BooksReadList extends StatelessWidget {
   final List<Book> booksRead;
@@ -11,19 +12,11 @@ class BooksReadList extends StatelessWidget {
   Widget build(BuildContext context) {
     return this.booksRead.length <= 0
         ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(
                 height: 64,
               ),
-              Icon(
-                Icons.do_not_disturb,
-                size: 56,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Text('No Books Read'),
+              NoBooks()
             ],
           )
         : Container(
