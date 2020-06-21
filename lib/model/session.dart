@@ -4,6 +4,8 @@ import 'package:mybooks/model/definition.dart';
 import 'package:mybooks/model/idea.dart';
 import 'package:mybooks/model/note.dart';
 
+enum Status { Active, Nonactive, Completed }
+
 class Session {
   String id;
   Book book; // String id of corresponding book
@@ -12,6 +14,8 @@ class Session {
   int totalPagesRead = 0;
   bool isCompleted = false;
   String end;
+  Status status; // Is session active, completed, or not started
+  Category category; // Book Category
   List<Idea> ideas;
   List<Note> notes;
   List<Definition> definitions;
@@ -23,6 +27,7 @@ class Session {
     @required this.duration,
     @required this.totalPagesRead,
     @required this.isCompleted,
+    @required this.status,
     this.end,
     this.ideas,
     this.notes,
@@ -32,4 +37,11 @@ class Session {
   String get bookTitle {
     return this.book.title;
   }
+
+  // String get categoryStr {
+  //   switch(this.category):{
+  //     case Category.Business: {}
+
+  //   }
+  // }
 }

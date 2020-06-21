@@ -140,6 +140,18 @@ class SessionsProvider with ChangeNotifier {
     return notes;
   }
 
+  String get longestBookRead {
+    Book longestBook;
+    this._sessions.forEach((element) {
+      if (element.book.pages <= longestBook.pages) {
+        longestBook = longestBook;
+      } else if (element.book.pages > longestBook.pages) {
+        longestBook = element.book;
+      }
+    });
+    return longestBook.title;
+  }
+
   void addNewNote(Note note) {
     this.currentSession.notes.add(
           Note(

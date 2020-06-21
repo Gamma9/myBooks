@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mybooks/widgets/sessions/readingSessionsList.dart';
+import 'package:mybooks/widgets/sessions/sessionGraphStats.dart';
 import 'package:mybooks/widgets/sessions/sessionMainStats.dart';
 
 // Providers
 import 'package:provider/provider.dart';
 import 'package:mybooks/providers/sessions.provider.dart';
-import 'package:mybooks/providers/books.provider.dart';
-
-// Model
-import 'package:mybooks/model/session.dart';
 
 // Widgets
 
@@ -27,32 +24,9 @@ class _ReadingSessionsScreenState extends State<ReadingSessionsScreen> {
       margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
       child: SingleChildScrollView(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Card(
-              margin: EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-              color: Theme.of(context).primaryColor,
-              elevation: 6,
-              child: Container(
-                height: 250,
-                padding: EdgeInsets.all(16),
-                width: double.infinity,
-                child: Column(
-                  children: <Widget>[Text('Test')],
-                ),
-              ),
-            ),
-            Card(
-              margin: EdgeInsets.all(0),
-              color: Theme.of(context).primaryColorDark,
-              elevation: 3,
-              child: Container(
-                height: 150,
-                padding: EdgeInsets.all(16),
-                width: double.infinity,
-                child: SessionMainStats(),
-              ),
-            ),
+            SessionGraphStats(),
+            SessionMainStats(),
             SizedBox(
               height: 16,
             ),
@@ -75,13 +49,14 @@ class _ReadingSessionsScreenState extends State<ReadingSessionsScreen> {
                     SizedBox(
                       height: 16,
                     ),
-                    // this.sessions.allSessions.length
-                    //     ? Center(
-                    //         child: Text('No Sessions Completed'),
-                    //       )
-                    //     :
-                    Container(
-                        height: 400, child: ReadingSessionsList(sessions)),
+                    sessions.length <= 0
+                        ? Center(
+                            child: Text('No Sessions Completed'),
+                          )
+                        : Container(
+                            height: 400,
+                            child: ReadingSessionsList(sessions),
+                          ),
                   ],
                 ),
               ),
@@ -92,8 +67,6 @@ class _ReadingSessionsScreenState extends State<ReadingSessionsScreen> {
           ],
         ),
       ),
-
-      // child: activeBooks.length <= 0 ? NoBooks() : MainBooksList(activeBooks),
     );
   }
 }

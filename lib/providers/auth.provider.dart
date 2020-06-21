@@ -4,14 +4,17 @@ import 'package:mybooks/model/user.dart';
 class AuthProvider with ChangeNotifier {
   bool isAuth = false;
   final User user = User(
+    readingSessions: [],
     id: DateTime.now().toString(),
     firstname: "Cameron",
     lastname: "Gamble",
     username: "stopitcam",
+    dob: 'November 30, 1995',
     books: [],
     booksRead: [],
+    definitions: [],
     favBook: null,
-    dob: 'November 30, 1995',
+    favCategory: '',
   );
 
   Future<void> login(

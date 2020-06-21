@@ -11,17 +11,6 @@ import 'package:provider/provider.dart';
 
 class ReadingSessionDetailScreen extends StatefulWidget {
   final Session _session;
-  //  = Session(
-  //   start: DateTime.now().toString(),
-  //   book: Book(),
-  //   end: '',
-  //   isCompleted: false,
-  //   duration: 0,
-  //   totalPagesRead: 0,
-  //   definitions: [],
-  //   ideas: [],
-  //   notes: [],
-  // );
 
   ReadingSessionDetailScreen(this._session);
 
@@ -141,8 +130,16 @@ class _ReadingSessionDetailScreenState
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
+                                  Text('Session #'),
+                                  Text(totalSessionsNum.toString()),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
                                   Text('Status'),
-                                  Text('Active'),
+                                  Text(this.widget._session.status.toString()),
                                 ],
                               ),
                               Row(
@@ -150,7 +147,8 @@ class _ReadingSessionDetailScreenState
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text('Category'),
-                                  Text('NonFiction'),
+                                  Text(
+                                      this.widget._session.category.toString()),
                                 ],
                               ),
                             ],
@@ -178,15 +176,35 @@ class _ReadingSessionDetailScreenState
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text('Pages/min.'),
-                                  Text('0'),
+                                  Text(
+                                    (this.widget._session.totalPagesRead / 60)
+                                        .round()
+                                        .toString(),
+                                  ),
                                 ],
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Text('Chapters'),
-                                  Text('0'),
+                                  Text('Pages read'),
+                                  Text(
+                                    this
+                                        .widget
+                                        ._session
+                                        .totalPagesRead
+                                        .toString(),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text('Time Spent'),
+                                  Text(
+                                    '${this.widget._session.duration.toString()} mins',
+                                  ),
                                 ],
                               ),
                             ],

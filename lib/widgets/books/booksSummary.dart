@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mybooks/model/book.dart';
-import 'package:mybooks/providers/auth.provider.dart';
+
+// Providers
+import 'package:mybooks/providers/books.provider.dart';
+import 'package:mybooks/providers/definitions.provider.dart';
 
 // Screens
 import 'package:mybooks/screens/definitionsScreen.dart';
@@ -12,11 +14,6 @@ class BooksSummary extends StatefulWidget {
 }
 
 class _BooksSummaryState extends State<BooksSummary> {
-  int totalBooksRead;
-  int totalPagesRead;
-  Category favoriteCategory;
-  String longestBookRead;
-
   void navToDefinitions(ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
@@ -29,8 +26,14 @@ class _BooksSummaryState extends State<BooksSummary> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
-    final user = authProvider.user;
+    final booksProvider = Provider.of<BooksProvider>(context);
+    final definitionsProvider = Provider.of<DefinitionsProvider>(context);
+    int totalBooksRead = booksProvider.getAllBooks.length;
+    int totalPagesRead = booksProvider
+        .allBooksRead.length; // Need to grab pages for each element in array
+    int totalDefinitions = definitionsProvider.getAllDefinitions.length;
+    // String longestBookRead = booksProvider.longestBookRead.title;
+    String favCategory = booksProvider.favCategory;
     return Container(
       child: Column(
         children: <Widget>[
@@ -50,7 +53,9 @@ class _BooksSummaryState extends State<BooksSummary> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text('Total Books Read'),
-                    Text(user.totalBooksRead.toString()),
+                    Text(totalBooksRead == null
+                        ? '0'
+                        : totalBooksRead.toString()),
                   ],
                 ),
                 SizedBox(
@@ -60,7 +65,9 @@ class _BooksSummaryState extends State<BooksSummary> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text('Total Pages Read'),
-                    Text(user.totalPages.toString()),
+                    Text(totalPagesRead == null
+                        ? '0'
+                        : totalPagesRead.toString()),
                   ],
                 ),
                 SizedBox(
@@ -71,9 +78,7 @@ class _BooksSummaryState extends State<BooksSummary> {
                   children: <Widget>[
                     Text('Favorite Category'),
                     Text(
-                      user.favCategory == null
-                          ? 'Start reading!'
-                          : user.favCategory.toString(),
+                      favCategory == null ? 'Start reading!' : favCategory,
                     ),
                   ],
                 ),
@@ -84,9 +89,11 @@ class _BooksSummaryState extends State<BooksSummary> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text('Longest Book Read'),
-                    Text(user.longestBookRead == null
-                        ? 'No books read'
-                        : user.longestBookRead.title),
+                    Text('No Books Read'
+                        // longestBookRead == null
+                        //     ? 'No books read'
+                        //     : longestBookRead,
+                        ),
                   ],
                 ),
                 SizedBox(
@@ -104,9 +111,9 @@ class _BooksSummaryState extends State<BooksSummary> {
                     ),
                     Row(
                       children: <Widget>[
-                        Text(user.definitions == null
+                        Text(totalDefinitions == null
                             ? '0 Definitions'
-                            : '${user.definitions.length} Defintions'),
+                            : '${totalDefinitions.toString()} Defintions'),
                         SizedBox(
                           width: 8,
                         ),

@@ -7,38 +7,7 @@ import 'package:mybooks/model/book.dart';
 import 'package:mybooks/model/definition.dart';
 
 class BooksProvider with ChangeNotifier {
-  List<Book> _books = [
-    // Book(
-    //   id: DateTime.now().toString(),
-    //   title: 'The Better Angels Of Our Nature',
-    //   imageUrl: null,
-    //   author: 'Steven Pinker',
-    //   category: Category.Nonfiction,
-    //   // imageUrl: "",
-    //   datePublished: "Testing",
-    //   pages: 864,
-    // ),
-    // Book(
-    //   id: DateTime.now().toString(),
-    //   title: 'The Laws Of Human Nature',
-    //   imageUrl: null,
-    //   author: 'Robert Greene',
-    //   datePublished: "Testing",
-    //   category: Category.Nonfiction,
-    //   // imageUrl: "",
-    //   pages: 864,
-    // ),
-    // Book(
-    //   id: DateTime.now().toString(),
-    //   title: 'Mastery',
-    //   imageUrl: null,
-    //   author: 'Robert Greene',
-    //   datePublished: 'Testing',
-    //   category: Category.Nonfiction,
-    //   // imageUrl: "",
-    //   pages: 864,
-    // ),
-  ];
+  List<Book> _books = [];
 
   Book findById(String id) {
     return this._books.firstWhere((element) => element.id == id);
@@ -70,11 +39,37 @@ class BooksProvider with ChangeNotifier {
 
   List<Definition> get allDefinitions {
     List<Definition> allDefinitions = [];
+    this._books.forEach((element) {});
+    return allDefinitions;
+  }
+
+  Book get longestBookRead {
+    Book longestBook;
     this._books.forEach((element) {
-      if (element.definitions != null) {
-        // allDefinitions.add(element.definitions.);
+      if (element.status == Status.Completed &&
+          element.pages > longestBook.pages) {
+        longestBook = element;
       }
     });
+    return longestBook;
+  }
+
+  String get favCategory {
+    String category;
+    this._books.forEach((element) {
+      if (element.category == Category.Business) {
+        category = 'Business';
+      } else if (element.category == Category.Fiction) {
+        category = 'Fiction';
+      } else if (element.category == Category.Nonfiction) {
+        category = 'Nonfiction';
+      } else if (element.category == Category.SelfHelp) {
+        category = 'Self-help';
+      } else if (element.category == Category.Thriller) {
+        category = 'Thriller';
+      }
+    });
+    return category;
   }
 
   Future<void> fetchAndSetBooks() async {

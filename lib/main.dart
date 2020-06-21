@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mybooks/providers/auth.provider.dart';
+import 'package:mybooks/providers/definitions.provider.dart';
 import 'package:mybooks/providers/sessions.provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<SessionsProvider>(
           create: (_) => SessionsProvider(),
+        ),
+        ChangeNotifierProvider<DefinitionsProvider>(
+          create: (_) => DefinitionsProvider(),
         )
       ],
       child: MaterialApp(

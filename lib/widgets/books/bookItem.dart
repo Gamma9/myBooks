@@ -41,8 +41,11 @@ class BookItem extends StatelessWidget {
                           )
                         : FittedBox(
                             fit: BoxFit.cover,
-                            child: Image.network(this.book.imageUrl),
-                          ),
+                            child: Center(
+                              child: Icon(Icons.check),
+                            )
+                            // child: Image.network(this.book.imageUrl),
+                            ),
                   ),
                 ),
                 onTap: () => navToBookDetail(context, this.book),
