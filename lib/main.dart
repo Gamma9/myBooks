@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mybooks/providers/auth.provider.dart';
+import 'package:mybooks/providers/sessions.provider.dart';
 import 'package:provider/provider.dart';
 
 // Providers
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(
           create: (_) => AuthProvider(),
         ),
+        ChangeNotifierProvider<SessionsProvider>(
+          create: (_) => SessionsProvider(),
+        )
       ],
       child: MaterialApp(
         title: 'My Books',

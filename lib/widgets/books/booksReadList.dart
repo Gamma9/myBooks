@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mybooks/model/book.dart';
 import 'package:mybooks/widgets/books/bookItem.dart';
-import 'package:mybooks/widgets/misc/noBooks.dart';
+import 'package:mybooks/widgets/misc/noCompletedBooks.dart';
 
 class BooksReadList extends StatelessWidget {
   final List<Book> booksRead;
@@ -16,7 +16,7 @@ class BooksReadList extends StatelessWidget {
               SizedBox(
                 height: 64,
               ),
-              NoBooks()
+              NoCompletedBooks()
             ],
           )
         : Container(

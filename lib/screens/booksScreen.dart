@@ -27,11 +27,10 @@ class _BooksState extends State<Books> {
         _isLoading = true;
       });
 
-      Provider.of<BooksProvider>(context).fetchAndSetBooks().then((_) => {
-            setState(() {
-              _isLoading = false;
-            })
-          });
+      Provider.of<BooksProvider>(context).fetchAndSetBooks().then((_) => {});
+      setState(() {
+        _isLoading = false;
+      });
     }
 
     super.didChangeDependencies();

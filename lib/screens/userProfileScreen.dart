@@ -13,9 +13,9 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    final booksProvider = Provider.of<BooksProvider>(context);
     final currentUser = authProvider.user;
     final booksRead = currentUser.booksRead;
+
     return Container(
       margin: EdgeInsets.all(16),
       child: Column(

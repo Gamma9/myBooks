@@ -44,12 +44,12 @@ class UserBio extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  '${this.user.booksRead.toString()} books read',
+                  '${this.user.totalBooksRead} books read',
                 ),
                 SizedBox(
                   width: 16,
                 ),
-                Text('0 total pages')
+                Text('${this.user.totalPages} total pages')
               ],
             ),
             SizedBox(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Screens
 import 'package:mybooks/screens/booksScreen.dart';
-import 'package:mybooks/screens/mainBooksScreen.dart';
+import 'package:mybooks/screens/readingSessionsScreen.dart';
 import 'package:mybooks/screens/newBookScreen.dart';
 import 'package:mybooks/screens/userProfileScreen.dart';
 import 'package:mybooks/widgets/drawerItems.dart';
@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
-    MainBooks(),
+    ReadingSessionsScreen(),
     Books(),
     UserProfile(),
   ];

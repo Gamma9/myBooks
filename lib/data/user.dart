@@ -5,6 +5,6 @@ final User user = User(
   firstname: "Cameron",
   lastname: "Gamble",
   username: "stopitcam",
-  booksRead: 0,
+  booksRead: [],
   dob: 'November 30, 1995',
 );

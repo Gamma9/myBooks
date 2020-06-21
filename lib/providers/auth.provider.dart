@@ -10,6 +10,7 @@ class AuthProvider with ChangeNotifier {
     username: "stopitcam",
     books: [],
     booksRead: [],
+    favBook: null,
     dob: 'November 30, 1995',
   );
 

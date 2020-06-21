@@ -55,7 +55,7 @@ class BookItem extends StatelessWidget {
                   child: Card(
                     elevation: 2,
                     child: Container(
-                      height: 175,
+                      height: 150,
                       padding: EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,8 +73,12 @@ class BookItem extends StatelessWidget {
                             height: 8,
                           ),
                           Text('${this.book.pages.toString()} pages'),
-                          Text(this.book.category.toString()),
-                          Text(this.book.status.toString()),
+                          Text(this.book.category == null
+                              ? 'No Category'
+                              : this.book.category.toString()),
+                          Text(this.book.status == null
+                              ? 'No Status'
+                              : this.book.status.toString()),
                         ],
                       ),
                     ),
