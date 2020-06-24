@@ -5,7 +5,7 @@ import 'package:mybooks/providers/sessions.provider.dart';
 import 'package:provider/provider.dart';
 
 // Providers
-import 'package:mybooks/providers/books.provider.dart';
+import 'package:mybooks/providers/library.provider.dart';
 import 'package:mybooks/providers/notifications.provider.dart';
 
 // Screens
@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<BooksProvider>(
-          create: (_) => BooksProvider(),
+        ChangeNotifierProvider<LibraryProvider>(
+          create: (_) => LibraryProvider(),
         ),
         ChangeNotifierProvider<NotificationsProvider>(
           create: (_) => NotificationsProvider(),

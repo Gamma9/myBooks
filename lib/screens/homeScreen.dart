@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Screens
-import 'package:mybooks/screens/booksScreen.dart';
+import 'package:mybooks/screens/libraryScreen.dart';
 import 'package:mybooks/screens/readingSessionsScreen.dart';
 import 'package:mybooks/screens/newBookScreen.dart';
 import 'package:mybooks/screens/userProfileScreen.dart';
@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
     ReadingSessionsScreen(),
-    Books(),
+    LibraryScreen(),
     UserProfile(),
   ];
 
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cam\'s Books'),
+        title: Text('My Books'),
         centerTitle: true,
         actions: <Widget>[
           PopupMenuButton<String>(
@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            title: Text('Books'),
+            title: Text('Library'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

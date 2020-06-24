@@ -79,9 +79,9 @@ class BookItem extends StatelessWidget {
                           Text(this.book.category == null
                               ? 'No Category'
                               : this.book.category.toString()),
-                          Text(this.book.status == null
-                              ? 'No Status'
-                              : this.book.status.toString()),
+                          Text(this.book.pages == null
+                              ? 'No Pages'
+                              : this.book.pages.toString()),
                         ],
                       ),
                     ),

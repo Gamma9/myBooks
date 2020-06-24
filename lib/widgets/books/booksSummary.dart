@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Providers
-import 'package:mybooks/providers/books.provider.dart';
+import 'package:mybooks/providers/library.provider.dart';
 import 'package:mybooks/providers/definitions.provider.dart';
 
 // Screens
@@ -26,14 +26,14 @@ class _BooksSummaryState extends State<BooksSummary> {
 
   @override
   Widget build(BuildContext context) {
-    final booksProvider = Provider.of<BooksProvider>(context);
+    final libraryProvider = Provider.of<LibraryProvider>(context);
     final definitionsProvider = Provider.of<DefinitionsProvider>(context);
-    int totalBooksRead = booksProvider.getAllBooks.length;
-    int totalPagesRead = booksProvider
+    int totalBooksRead = libraryProvider.getAllBooks.length;
+    int totalPagesRead = libraryProvider
         .allBooksRead.length; // Need to grab pages for each element in array
-    int totalDefinitions = definitionsProvider.getAllDefinitions.length;
+    int totalDefinitions = definitionsProvider.allDefinitions.length;
     // String longestBookRead = booksProvider.longestBookRead.title;
-    String favCategory = booksProvider.favCategory;
+    String favCategory = libraryProvider.favCategory;
     return Container(
       child: Column(
         children: <Widget>[

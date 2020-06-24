@@ -11,7 +11,7 @@ class ReadingSessionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (ctx, index) {
-        return ReadingSessionItem(this.sessions[index]);
+        return ReadingSessionItem(this.sessions[index], index);
       },
       itemCount: this.sessions.length,
     );

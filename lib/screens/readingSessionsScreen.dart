@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mybooks/model/session.dart';
 import 'package:mybooks/widgets/sessions/readingSessionsList.dart';
 import 'package:mybooks/widgets/sessions/sessionGraphStats.dart';
-import 'package:mybooks/widgets/sessions/sessionMainStats.dart';
+import 'package:mybooks/widgets/sessions/mainStats/sessionMainStats.dart';
 
 // Providers
 import 'package:provider/provider.dart';
 import 'package:mybooks/providers/sessions.provider.dart';
 
 // Widgets
+import 'package:mybooks/widgets/misc/noSessions.dart';
 
 class ReadingSessionsScreen extends StatefulWidget {
   @override
@@ -15,6 +17,32 @@ class ReadingSessionsScreen extends StatefulWidget {
 }
 
 class _ReadingSessionsScreenState extends State<ReadingSessionsScreen> {
+  bool _isLoading = false;
+  bool _isInit = true;
+
+  @override
+  void initState() {
+    // Provider.of<SessionsProvider>(context, listen: false)
+    //     .fetchAndSetAllSessions();
+    // Future.delayed(Duration.zero).then((_) => {
+    //   Provider.of<SessionsProvider>(context).fetchAndSetAllSessions();
+    // });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<SessionsProvider>(context).fetchAndSetAllSessions();
+    }
+    _isInit = false;
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final sessionsProvider = Provider.of<SessionsProvider>(context);
@@ -49,10 +77,8 @@ class _ReadingSessionsScreenState extends State<ReadingSessionsScreen> {
                     SizedBox(
                       height: 16,
                     ),
-                    sessions.length <= 0
-                        ? Center(
-                            child: Text('No Sessions Completed'),
-                          )
+                    sessions == null
+                        ? NoSessions()
                         : Container(
                             height: 400,
                             child: ReadingSessionsList(sessions),

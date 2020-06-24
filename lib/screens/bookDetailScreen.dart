@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mybooks/model/book.dart';
+import 'package:mybooks/screens/newSessionScreen.dart';
 
 class BookDetailScreen extends StatelessWidget {
   final Book book;
 
   BookDetailScreen(this.book);
+
+  void startNewSession(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) {
+        return NewSessionScreen(this.book);
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +34,33 @@ class BookDetailScreen extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          InkWell(
+            splashColor: Theme.of(context).primaryColorLight,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 32, vertical: 0),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColorDark,
+                  borderRadius: BorderRadius.circular(16)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Start A New Session',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+            onTap: () => startNewSession(context),
           ),
           Container(
             margin: EdgeInsets.symmetric(
@@ -50,11 +86,18 @@ class BookDetailScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 14),
                 ),
                 Text(
-                  this.book.category.toString(),
+                  this.book.datePublished.isEmpty
+                      ? 'No Published Date'
+                      : this.book.datePublished.toString(),
                   style: TextStyle(fontSize: 14),
                 ),
-                Text(this.book.datePublished),
-                Text(this.book.pages.toString()),
+                SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  this.book.category.toString(),
+                ),
+                Text('${this.book.pages.toString()} pages'),
                 Row(
                   children: <Widget>[
                     Icon(
@@ -102,7 +145,7 @@ class BookDetailScreen extends StatelessWidget {
                     padding: EdgeInsets.all(16),
                     height: 100,
                     width: double.infinity,
-                    child: this.book.ideas == null
+                    child: this.book.ideas.isEmpty
                         ? Text('No ideas yet...')
                         : Text(this.book.ideas),
                   ),
@@ -130,7 +173,7 @@ class BookDetailScreen extends StatelessWidget {
                     padding: EdgeInsets.all(16),
                     height: 100,
                     width: double.infinity,
-                    child: this.book.notes == null
+                    child: this.book.notes.isEmpty
                         ? Text('No notes yet...')
                         : Text(this.book.notes),
                   ),

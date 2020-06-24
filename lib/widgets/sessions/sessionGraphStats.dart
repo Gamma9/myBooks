@@ -29,7 +29,7 @@ class _SessionGraphStatsState extends State<SessionGraphStats> {
                   ? SessionLengthChart()
                   : this.sessionGraph == 'pagesRead'
                       ? PagesReadGraph()
-                      : this.sessionGraph == 'trending'
+                      : this.sessionGraph == 'sessionTrends'
                           ? SessionsTrendingGraph()
                           : SessionLengthChart(),
             ),
@@ -45,9 +45,17 @@ class _SessionGraphStatsState extends State<SessionGraphStats> {
                       borderRadius: BorderRadius.circular(30),
                       splashColor: Theme.of(context).primaryColorDark,
                       child: CircleAvatar(
-                        radius: 18,
-                        child: Icon(Icons.timer),
-                        backgroundColor: Colors.white,
+                        radius: this.sessionGraph == 'sessionLength' ? 14 : 18,
+                        child: Icon(
+                          Icons.timer,
+                          size: this.sessionGraph == 'sessionLength' ? 16 : 24,
+                          color: this.sessionGraph == 'sessionLength'
+                              ? Colors.white
+                              : Theme.of(context).primaryColor,
+                        ),
+                        backgroundColor: this.sessionGraph == 'sessionLength'
+                            ? Theme.of(context).primaryColorDark
+                            : Colors.white,
                       ),
                       onTap: () {
                         setState(() {
@@ -63,9 +71,17 @@ class _SessionGraphStatsState extends State<SessionGraphStats> {
                       borderRadius: BorderRadius.circular(30),
                       splashColor: Theme.of(context).primaryColorDark,
                       child: CircleAvatar(
-                        radius: 18,
-                        child: Icon(Icons.bookmark_border),
-                        backgroundColor: Colors.white,
+                        radius: this.sessionGraph == 'pagesRead' ? 14 : 18,
+                        child: Icon(
+                          Icons.bookmark_border,
+                          size: this.sessionGraph == 'pagesRead' ? 16 : 24,
+                          color: this.sessionGraph == 'pagesRead'
+                              ? Colors.white
+                              : Theme.of(context).primaryColorDark,
+                        ),
+                        backgroundColor: this.sessionGraph == 'pagesRead'
+                            ? Theme.of(context).primaryColorDark
+                            : Colors.white,
                       ),
                       onTap: () {
                         setState(() {
@@ -78,15 +94,24 @@ class _SessionGraphStatsState extends State<SessionGraphStats> {
                       height: 24,
                     ),
                     InkWell(
-                      splashColor: Theme.of(context).primaryColorLight,
+                      borderRadius: BorderRadius.circular(30),
+                      splashColor: Theme.of(context).primaryColorDark,
                       child: CircleAvatar(
-                        radius: 18,
-                        child: Icon(Icons.trending_up),
-                        backgroundColor: Colors.white,
+                        radius: this.sessionGraph == 'sessionTrends' ? 14 : 18,
+                        child: Icon(
+                          Icons.trending_up,
+                          size: this.sessionGraph == 'sessionTrends' ? 16 : 24,
+                          color: this.sessionGraph == 'sessionTrends'
+                              ? Colors.white
+                              : Theme.of(context).primaryColorDark,
+                        ),
+                        backgroundColor: this.sessionGraph == 'sessionTrends'
+                            ? Theme.of(context).primaryColorDark
+                            : Colors.white,
                       ),
                       onTap: () {
                         setState(() {
-                          this.sessionGraph = 'trending';
+                          this.sessionGraph = 'sessionTrends';
                         });
                         print(this.sessionGraph);
                       },

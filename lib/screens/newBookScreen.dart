@@ -3,7 +3,7 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
 // Providers
-import 'package:mybooks/providers/books.provider.dart';
+import 'package:mybooks/providers/library.provider.dart';
 
 // Model
 import 'package:mybooks/model/book.dart';
@@ -23,7 +23,6 @@ class _NewBookState extends State<NewBook> {
     author: '',
     datePublished: '',
     category: null,
-    status: null,
     imageUrl: '',
     pages: 0,
   );
@@ -80,7 +79,6 @@ class _NewBookState extends State<NewBook> {
       title: this.book.title,
       author: this.book.author,
       category: this.book.category,
-      status: Status.Nonactive,
       datePublished: this.book.datePublished,
       pages: this.book.pages,
       ideas: '',
@@ -88,7 +86,7 @@ class _NewBookState extends State<NewBook> {
       summary: '',
       definitions: [],
     );
-    Provider.of<BooksProvider>(context, listen: false).addNewBook(book);
+    Provider.of<LibraryProvider>(context, listen: false).addNewBook(book);
     this.isLoading = false;
     Navigator.of(context).pop();
   }

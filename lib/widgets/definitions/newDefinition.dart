@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mybooks/model/definition.dart';
+import 'package:mybooks/providers/definitions.provider.dart';
 import 'package:mybooks/providers/sessions.provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,15 +20,19 @@ class _NewDefinitionState extends State<NewDefinition> {
 
   @override
   Widget build(BuildContext context) {
-    // final sessionsProvider = Provider.of<SessionsProvider>(context);
-    // final definitions = sessionsProvider.;
+    final sessionsProvider = Provider.of<SessionsProvider>(context);
+    final definitionsProvider = Provider.of<DefinitionsProvider>(context);
+    final definitions = definitionsProvider.allDefinitions;
+
     void addNewDefinition(String title, String definition) {
+      int encounters = 0;
+      encounters++;
       final newDef = Definition(
         title: title,
         description: definition,
-        encounters: 0,
+        encounters: encounters,
       );
-      this.widget._definitions.add(newDef);
+      definitions.add(newDef);
     }
 
     return Container(
@@ -65,7 +70,10 @@ class _NewDefinitionState extends State<NewDefinition> {
                 color: Theme.of(context).primaryColor,
                 textColor: Colors.white,
                 child: Text('Submit'),
-                onPressed: () => addNewDefinition(this.title, this.definition),
+                onPressed: () {
+                  addNewDefinition(this.title, this.definition);
+                  Navigator.of(context).pop();
+                },
               ),
             ],
           ),

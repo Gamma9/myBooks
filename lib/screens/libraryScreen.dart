@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:mybooks/model/book.dart';
-import 'package:mybooks/providers/books.provider.dart';
+
+// Model
+// import 'package:mybooks/model/book.dart';
+
+// Providers
+import 'package:provider/provider.dart';
+import 'package:mybooks/providers/library.provider.dart';
+
+// Widgets
 import 'package:mybooks/widgets/books/booksList.dart';
 import 'package:mybooks/widgets/books/booksSummary.dart';
-import 'package:provider/provider.dart';
+import 'package:mybooks/widgets/misc/noLoadedBooks.dart';
 
-class Books extends StatefulWidget {
+class LibraryScreen extends StatefulWidget {
   @override
-  _BooksState createState() => _BooksState();
+  _LibraryScreenState createState() => _LibraryScreenState();
 }
 
-class _BooksState extends State<Books> {
+class _LibraryScreenState extends State<LibraryScreen> {
   var _isInit = true;
   var _isLoading = false;
 
@@ -27,7 +34,7 @@ class _BooksState extends State<Books> {
         _isLoading = true;
       });
 
-      Provider.of<BooksProvider>(context).fetchAndSetBooks().then((_) => {});
+      Provider.of<LibraryProvider>(context).fetchAndSetBooks().then((_) => {});
       setState(() {
         _isLoading = false;
       });
@@ -38,8 +45,8 @@ class _BooksState extends State<Books> {
 
   @override
   Widget build(BuildContext context) {
-    final booksProvider = Provider.of<BooksProvider>(context);
-    final currentBooks = booksProvider.getAllBooks;
+    final libraryProvider = Provider.of<LibraryProvider>(context);
+    final currentBooks = libraryProvider.getAllBooks;
     return Container(
       margin: EdgeInsets.all(16),
       child: Column(
@@ -52,7 +59,9 @@ class _BooksState extends State<Books> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : BooksList(currentBooks),
+                : currentBooks.length <= 0
+                    ? NoLoadedBooks()
+                    : BooksList(currentBooks),
           ),
         ],
       ),

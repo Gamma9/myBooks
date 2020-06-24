@@ -1,18 +1,21 @@
+import 'dart:convert';
+
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mybooks/model/book.dart';
 import 'package:mybooks/model/definition.dart';
 import 'package:mybooks/model/idea.dart';
 import 'package:mybooks/model/note.dart';
 import 'package:mybooks/model/session.dart';
-import 'package:mybooks/providers/auth.provider.dart';
-import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class SessionsProvider with ChangeNotifier {
   Session currentSession;
+  List<Session> _weeklySessionsList = [];
+
   List<Session> _sessions = [
     Session(
       isCompleted: true,
-      start: 'Testing',
       totalPagesRead: 0,
       definitions: [],
       book: Book(
@@ -28,7 +31,6 @@ class SessionsProvider with ChangeNotifier {
     ),
     Session(
       isCompleted: true,
-      start: 'Testing',
       totalPagesRead: 32,
       definitions: [],
       book: Book(
@@ -44,7 +46,6 @@ class SessionsProvider with ChangeNotifier {
     ),
     Session(
       isCompleted: true,
-      start: 'Testing',
       totalPagesRead: 23,
       definitions: [],
       book: Book(
@@ -61,7 +62,19 @@ class SessionsProvider with ChangeNotifier {
   ];
 
   List<Session> get allSessions {
-    return [...this._sessions];
+    // return [...this._sessions];
+    // return fetchAndSetAllSessions().then((value) {
+
+    // });
+  }
+
+  int get totalSessionsMinutes {
+    var totalSecs = 0;
+    this._sessions.forEach((element) {
+      totalSecs += element.duration;
+    });
+
+    return totalSecs;
   }
 
   Session getSingleSession(String id) {
@@ -70,8 +83,12 @@ class SessionsProvider with ChangeNotifier {
     return session;
   }
 
+  Session getCurrentSession() {
+    return this._sessions[0];
+  }
+
   List<Session> get recentReadingSessions {
-    List<Session> recentSessions = this._sessions.sublist(0, 9);
+    List<Session> recentSessions = this._sessions.sublist(0, 6);
     return recentSessions;
   }
 
@@ -152,33 +169,259 @@ class SessionsProvider with ChangeNotifier {
     return longestBook.title;
   }
 
+  List<BarChartGroupData> weeklySessionLengthsData(
+    BuildContext context,
+  ) {
+    List<BarChartGroupData> barChartGroupData = [];
+
+    for (int i = 0; i < 6; i++) {
+      var sessionData = BarChartGroupData(x: i, barRods: [
+        BarChartRodData(y: 8, color: Theme.of(context).primaryColorLight)
+      ], showingTooltipIndicators: [
+        0
+      ]);
+      barChartGroupData.add(sessionData);
+    }
+    return barChartGroupData;
+  }
+
+  List<BarChartGroupData> weeklySessionLengthChart(BuildContext context) {
+    final data = weeklySessionLengthsData(context);
+    return data;
+  }
+
+  List<BarChartGroupData> weeklyPagesReadChart(BuildContext context) {
+    return weeklyPagesReadData(
+      context,
+    );
+  }
+
+  List<BarChartGroupData> weeklyPagesReadData(BuildContext context) {
+    List<BarChartGroupData> barChartGroupData = [];
+
+    for (int i = 0; i < 6; i++) {
+      var sessionData = BarChartGroupData(x: i, barRods: [
+        BarChartRodData(y: 11, color: Theme.of(context).primaryColorLight)
+      ], showingTooltipIndicators: [
+        0
+      ]);
+      barChartGroupData.add(sessionData);
+    }
+    return barChartGroupData;
+  }
+
+  List<BarChartGroupData> weeklySessionTrendsChart(BuildContext context) {
+    return weeklySessionTrendsData(context);
+  }
+
+  List<BarChartGroupData> weeklySessionTrendsData(BuildContext context) {
+    List<BarChartGroupData> barChartGroupData = [];
+
+    for (int i = 0; i < 6; i++) {
+      var sessionData = BarChartGroupData(x: i, barRods: [
+        BarChartRodData(y: 7, color: Theme.of(context).primaryColorLight)
+      ], showingTooltipIndicators: [
+        0
+      ]);
+      barChartGroupData.add(sessionData);
+    }
+    return barChartGroupData;
+  }
+
   void addNewNote(Note note) {
-    this.currentSession.notes.add(
-          Note(
-            title: note.title,
-            body: note.body,
-          ),
-        );
-    print(this.currentSession.notes);
+    const url = 'https://mybooks-2e36f.firebaseio.com/notes.json';
+
+    http
+        .post(
+      url,
+      body: json.encode({
+        'title': note.title,
+        'body': note.body,
+      }),
+    )
+        .then((response) {
+      final newNote = Note(
+        id: json.decode(response.body)['name'],
+        title: note.title,
+        body: note.body,
+      );
+      print(newNote);
+      // this.notes.add(newNote);
+    });
+
+    // this.currentSession.notes.add(
+    //       Note(
+    //         title: note.title,
+    //         body: note.body,
+    //       ),
+    //     );
+    // print(this.currentSession.notes);
   }
 
   void addNewIdea(Idea idea) {
-    this.currentSession.ideas.add(
-          Idea(
-            title: idea.title,
-            body: idea.body,
-          ),
-        );
+    const url = 'https://mybooks-2e36f.firebaseio.com/ideas.json';
+
+    http
+        .post(
+      url,
+      body: json.encode({
+        'title': idea.title,
+        'body': idea.body,
+      }),
+    )
+        .then((response) {
+      final newIdea = Idea(
+        id: json.decode(response.body)['name'],
+        title: idea.title,
+        body: idea.body,
+      );
+      print(newIdea);
+      // this.ideas.add(newIdea);
+    });
   }
 
   void addNewDefinition(Definition def) {
+    const url = 'https://mybooks-2e36f.firebaseio.com/definitions.json';
     def.encounters++;
-    this.currentSession.definitions.add(
-          Definition(
-            title: def.title,
-            description: def.description,
-            encounters: def.encounters,
+    http
+        .post(
+      url,
+      body: json.encode({
+        'title': def.title,
+        'description': def.description,
+        'encounters': def.encounters,
+      }),
+    )
+        .then((response) {
+      final newDefinition = Definition(
+        id: json.decode(response.body)['name'],
+        title: def.title,
+        description: def.description,
+        encounters: def.encounters,
+      );
+      print(newDefinition);
+      // this.definitions.add(newDefinition);
+    });
+  }
+
+  void addNewSession(Session session) {
+    const url = 'https://mybooks-2e36f.firebaseio.com/sessions.json';
+
+    http
+        .post(
+      url,
+      body: json.encode({
+        'book': json.encode({
+          'title': session.book.title,
+          'author': session.book.author,
+          'imageUrl': 'N/A',
+          'pages': session.book.pages,
+          'datePublished': session.book.datePublished,
+          'category': session.book.category,
+          'isCompleted': session.book.isCompleted,
+          'summary': session.book.summary,
+          'ideas': session.book.ideas,
+          'notes': session.book.notes,
+          'definitions': session.book.definitions,
+        }),
+        'isCompleted': session.isCompleted,
+        'start': session.start.toString(),
+        'end': session.end.toString(),
+        'running': session.running,
+        'duration': session.duration,
+        'status': session.status.toString(),
+        'timestamp': session.timestamp.toString(),
+        'totalPagesRead': session.totalPagesRead,
+        'notes': session.notes,
+        'definitions': session.definitions,
+        'ideas': session.ideas,
+      }),
+    )
+        .then((response) {
+      final newSession = Session(
+        id: json.decode(response.body)['name'],
+        book: session.book,
+        isCompleted: session.isCompleted,
+        start: session.start,
+        end: session.end,
+        running: session.running,
+        duration: session.duration,
+        status: session.status,
+        timestamp: session.timestamp,
+        totalPagesRead: session.totalPagesRead,
+        notes: session.notes,
+        definitions: session.definitions,
+        ideas: session.ideas,
+      );
+      this._sessions.add(newSession);
+      notifyListeners();
+    });
+  }
+
+  void startNewSession(Session session) {
+    session.newStatus = Status.Active;
+    session.running = true;
+    this.addNewSession(session);
+  }
+
+  Future<void> fetchAndSetAllSessions() async {
+    const url = 'https://mybooks-2e36f.firebaseio.com/sessions.json';
+    try {
+      final List<Session> loadedSessions = [];
+      final response = await http.get(url);
+      print(json.decode(response.body));
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      extractedData.forEach((sessionId, sessionData) {
+        loadedSessions.add(
+          Session(
+            id: sessionId,
+            book: sessionData['book'],
+            isCompleted: sessionData['isCompleted'],
+            start: sessionData['start'],
+            end: sessionData['end'],
+            running: sessionData['running'],
+            duration: sessionData['duration'],
+            status: sessionData['status'],
+            timestamp: sessionData['timestamp'],
+            totalPagesRead: sessionData['totalPagesRead'],
+            notes: sessionData['notes'],
+            definitions: sessionData['definitions'],
+            ideas: sessionData['ideas'],
           ),
         );
+      });
+      this._sessions = loadedSessions;
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  List<Session> get printTodaysSessions {
+    var now = DateTime.now();
+    var twentyFourHoursAgo = now.subtract(Duration(hours: 24));
+    const url =
+        'https://mybooks-2e36f.firebaseio.com/sessions/todaysSessions.json';
+    var todaysSessions = [];
+    this._sessions.forEach((element) {
+      var timestamp = element.timestamp;
+      if (timestamp.hour <= twentyFourHoursAgo.hour ||
+          timestamp.minute <= twentyFourHoursAgo.minute ||
+          timestamp.second <= twentyFourHoursAgo.second) {
+        todaysSessions.add(element);
+      }
+    });
+
+    http
+        .post(
+      url,
+      body: json.encode({DateTime.now().toLocal().toString(): todaysSessions}),
+    )
+        .then((response) {
+      return response;
+    });
+
+    return todaysSessions;
   }
 }

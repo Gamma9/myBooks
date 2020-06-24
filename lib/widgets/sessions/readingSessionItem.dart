@@ -4,13 +4,16 @@ import 'package:mybooks/screens/readingSessionDetailScreen.dart';
 
 class ReadingSessionItem extends StatelessWidget {
   final Session session;
-
-  ReadingSessionItem(this.session);
+  final int index;
+  ReadingSessionItem(this.session, this.index);
 
   void viewReadingSessionDetails(BuildContext ctx) {
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
-      return ReadingSessionDetailScreen(this.session);
-    }));
+    Navigator.of(ctx).push(
+      MaterialPageRoute(builder: (_) {
+        final index = this.index + 1;
+        return ReadingSessionDetailScreen(this.session);
+      }),
+    );
   }
 
   @override
@@ -20,25 +23,44 @@ class ReadingSessionItem extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+            color: this.session.running == true
+                ? Theme.of(context).primaryColor
+                : null,
+            border: this.session.running == true
+                ? null
+                : Border.all(color: Theme.of(context).primaryColor, width: 2),
             borderRadius: BorderRadius.circular(10),
           ),
           child: ListTile(
             leading: this.session.duration != null
                 ? CircleAvatar(
+                    backgroundColor:
+                        this.session.running == true ? Colors.white : null,
                     radius: 18,
                     child: Text(
                       this.session.duration.toString(),
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(
+                          color: this.session.running == true
+                              ? Theme.of(context).primaryColorDark
+                              : Colors.white,
+                          fontSize: 16),
                     ),
                   )
                 : Icon(
                     Icons.access_time,
                     color: Theme.of(context).primaryColor,
                   ),
-            title: Text(this.session.bookTitle),
+            title: Text(
+              this.session.bookTitle,
+              style: TextStyle(
+                  color: this.session.running == true ? Colors.white : null),
+            ),
             trailing: FlatButton(
-              child: Text('VIEW'),
+              child: Text(
+                'VIEW',
+                style: TextStyle(
+                    color: this.session.running == true ? Colors.white : null),
+              ),
               onPressed: () => viewReadingSessionDetails(context),
             ),
           ),

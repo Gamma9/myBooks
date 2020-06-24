@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:mybooks/providers/sessions.provider.dart';
+import 'package:provider/provider.dart';
 
 class SessionLengthChart extends StatefulWidget {
   @override
@@ -9,6 +11,9 @@ class SessionLengthChart extends StatefulWidget {
 class _SessionLengthChartState extends State<SessionLengthChart> {
   @override
   Widget build(BuildContext context) {
+    final sessionsProvider = Provider.of<SessionsProvider>(context);
+    final sessionsLengthChartData =
+        sessionsProvider.weeklySessionLengthChart(context);
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,44 +89,7 @@ class _SessionLengthChartState extends State<SessionLengthChart> {
               borderData: FlBorderData(
                 show: false,
               ),
-              barGroups: [
-                BarChartGroupData(x: 0, barRods: [
-                  BarChartRodData(
-                      y: 8, color: Theme.of(context).primaryColorLight)
-                ], showingTooltipIndicators: [
-                  0
-                ]),
-                BarChartGroupData(x: 1, barRods: [
-                  BarChartRodData(
-                      y: 10, color: Theme.of(context).primaryColorLight)
-                ], showingTooltipIndicators: [
-                  0
-                ]),
-                BarChartGroupData(x: 2, barRods: [
-                  BarChartRodData(
-                      y: 14, color: Theme.of(context).primaryColorLight)
-                ], showingTooltipIndicators: [
-                  0
-                ]),
-                BarChartGroupData(x: 3, barRods: [
-                  BarChartRodData(
-                      y: 15, color: Theme.of(context).primaryColorLight)
-                ], showingTooltipIndicators: [
-                  0
-                ]),
-                BarChartGroupData(x: 3, barRods: [
-                  BarChartRodData(
-                      y: 13, color: Theme.of(context).primaryColorLight)
-                ], showingTooltipIndicators: [
-                  0
-                ]),
-                BarChartGroupData(x: 3, barRods: [
-                  BarChartRodData(
-                      y: 10, color: Theme.of(context).primaryColorLight)
-                ], showingTooltipIndicators: [
-                  0
-                ]),
-              ],
+              barGroups: sessionsLengthChartData,
             ),
           ),
         ],

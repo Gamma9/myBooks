@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:mybooks/model/book.dart';
 import 'package:mybooks/model/definition.dart';
 
-class BooksProvider with ChangeNotifier {
+class LibraryProvider with ChangeNotifier {
   List<Book> _books = [];
 
   Book findById(String id) {
@@ -17,20 +17,10 @@ class BooksProvider with ChangeNotifier {
     return [...this._books];
   }
 
-  List<Book> get getActiveBooks {
-    List<Book> activeBooks = [];
-    this._books.forEach((element) {
-      if (element.status == Status.Active) {
-        activeBooks.add(element);
-      }
-    });
-    return activeBooks;
-  }
-
   List<Book> get allBooksRead {
     List<Book> booksRead = [];
     this._books.forEach((element) {
-      if (element.status == Status.Completed) {
+      if (element.isCompleted == true) {
         booksRead.add(element);
       }
     });
@@ -46,8 +36,7 @@ class BooksProvider with ChangeNotifier {
   Book get longestBookRead {
     Book longestBook;
     this._books.forEach((element) {
-      if (element.status == Status.Completed &&
-          element.pages > longestBook.pages) {
+      if (element.isCompleted == true && element.pages > longestBook.pages) {
         longestBook = element;
       }
     });
@@ -109,24 +98,6 @@ class BooksProvider with ChangeNotifier {
             break;
         }
 
-        switch (bookData['status']) {
-          case Status.Active:
-            {
-              bookStatus = 'Active';
-            }
-            break;
-          case Status.Completed:
-            {
-              bookStatus = 'Completed';
-            }
-            break;
-          case Status.Nonactive:
-            {
-              bookStatus = 'Nonactive';
-            }
-            break;
-        }
-
         loadedBooks.add(
           Book(
             id: bookId,
@@ -138,7 +109,6 @@ class BooksProvider with ChangeNotifier {
             category: bookCategory,
             summary: bookData['summary'],
             definitions: bookData['definitions'],
-            status: bookStatus,
             notes: bookData['notes'],
             ideas: bookData['ideas'],
           ),
@@ -182,24 +152,6 @@ class BooksProvider with ChangeNotifier {
         break;
     }
 
-    switch (book.status) {
-      case Status.Active:
-        {
-          book.statusStr = 'Active';
-        }
-        break;
-      case Status.Completed:
-        {
-          book.statusStr = 'Completed';
-        }
-        break;
-      case Status.Nonactive:
-        {
-          book.statusStr = 'Nonactive';
-        }
-        break;
-    }
-
     http
         .post(
       url,
@@ -210,7 +162,6 @@ class BooksProvider with ChangeNotifier {
         'pages': book.pages,
         'datePublished': book.datePublished,
         'category': book.categoryStr,
-        'status': book.statusStr,
         'summary': book.summary,
         'ideas': book.ideas,
         'notes': book.notes,
@@ -226,7 +177,6 @@ class BooksProvider with ChangeNotifier {
         pages: book.pages,
         datePublished: book.datePublished,
         category: book.category,
-        status: book.status,
         summary: book.summary,
         ideas: book.ideas,
         notes: book.notes,

@@ -3,10 +3,10 @@ import 'package:mybooks/model/book.dart';
 import 'package:mybooks/model/session.dart';
 import 'package:mybooks/providers/sessions.provider.dart';
 import 'package:mybooks/widgets/definitions/newDefinition.dart';
-import 'package:mybooks/widgets/sessions/ideasList.dart';
-import 'package:mybooks/widgets/sessions/newIdea.dart';
-import 'package:mybooks/widgets/sessions/newNote.dart';
-import 'package:mybooks/widgets/sessions/notesList.dart';
+import 'package:mybooks/widgets/sessions/ideas/ideasList.dart';
+import 'package:mybooks/widgets/sessions/ideas/newIdea.dart';
+import 'package:mybooks/widgets/sessions/notes/newNote.dart';
+import 'package:mybooks/widgets/sessions/notes/notesList.dart';
 import 'package:provider/provider.dart';
 
 class ReadingSessionDetailScreen extends StatefulWidget {
@@ -51,11 +51,12 @@ class _ReadingSessionDetailScreenState
   @override
   Widget build(BuildContext context) {
     final sessionsProvider = Provider.of<SessionsProvider>(context);
-    final totalSessionsNum = sessionsProvider.allSessions.length;
+    final currentSession = sessionsProvider.getCurrentSession();
+    // this.widget._index + 1;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Session #${totalSessionsNum.toString()}'),
+        title: Text('Session'),
       ),
       body: Container(
         child: ListView(
@@ -72,7 +73,7 @@ class _ReadingSessionDetailScreenState
                       style: TextStyle(color: Colors.white, fontSize: 42),
                     ),
                     Text(
-                      this.widget._session.bookTitle,
+                      currentSession.bookTitle,
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     )
                   ],
@@ -101,11 +102,11 @@ class _ReadingSessionDetailScreenState
                     ],
                   ),
                   Text(
-                    this.widget._session.bookTitle,
+                    currentSession.bookTitle,
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
-                    this.widget._session.book.author,
+                    currentSession.book.author,
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(
@@ -131,7 +132,7 @@ class _ReadingSessionDetailScreenState
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text('Session #'),
-                                  Text(totalSessionsNum.toString()),
+                                  // Text(this.widget._index.toString()),
                                 ],
                               ),
                               Row(
@@ -139,7 +140,7 @@ class _ReadingSessionDetailScreenState
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text('Status'),
-                                  Text(this.widget._session.status.toString()),
+                                  Text(currentSession.status.toString()),
                                 ],
                               ),
                               Row(
@@ -147,8 +148,7 @@ class _ReadingSessionDetailScreenState
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text('Category'),
-                                  Text(
-                                      this.widget._session.category.toString()),
+                                  Text(currentSession.category.toString()),
                                 ],
                               ),
                             ],
@@ -189,11 +189,7 @@ class _ReadingSessionDetailScreenState
                                 children: <Widget>[
                                   Text('Pages read'),
                                   Text(
-                                    this
-                                        .widget
-                                        ._session
-                                        .totalPagesRead
-                                        .toString(),
+                                    currentSession.totalPagesRead.toString(),
                                   ),
                                 ],
                               ),
@@ -203,7 +199,7 @@ class _ReadingSessionDetailScreenState
                                 children: <Widget>[
                                   Text('Time Spent'),
                                   Text(
-                                    '${this.widget._session.duration.toString()} mins',
+                                    '${currentSession.duration.toString()} mins',
                                   ),
                                 ],
                               ),
@@ -251,7 +247,7 @@ class _ReadingSessionDetailScreenState
                               Text(
                                 this.widget._session.ideas == null
                                     ? 'Ideas (0)'
-                                    : 'Ideas (${this.widget._session.ideas.length})',
+                                    : 'Ideas (${currentSession.ideas.length})',
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 18,
@@ -267,7 +263,7 @@ class _ReadingSessionDetailScreenState
                           ),
                           this.widget._session.ideas == null
                               ? Text('...')
-                              : IdeasList(this.widget._session.ideas),
+                              : IdeasList(currentSession.ideas),
                         ],
                       ),
                     ),
@@ -285,7 +281,7 @@ class _ReadingSessionDetailScreenState
                               Text(
                                 this.widget._session.notes == null
                                     ? 'Notes (0)'
-                                    : 'Notes (${this.widget._session.notes.length})',
+                                    : 'Notes (${currentSession.notes.length})',
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Theme.of(context).primaryColor,
@@ -301,7 +297,7 @@ class _ReadingSessionDetailScreenState
                           ),
                           this.widget._session.notes == null
                               ? Text('...')
-                              : NotesList(this.widget._session.notes),
+                              : NotesList(currentSession.notes),
                         ],
                       ),
                     ),

@@ -13,7 +13,7 @@ class DefinitionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final definitionsProvider = Provider.of<DefinitionsProvider>(context);
-    final definitions = definitionsProvider.getAllDefinitions;
+    final definitions = definitionsProvider.allDefinitions;
     return Scaffold(
       appBar: AppBar(
         title: Text('Definitions'),
