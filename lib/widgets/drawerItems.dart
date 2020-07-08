@@ -6,8 +6,6 @@ import 'package:mybooks/screens/definitionsScreen.dart';
 import 'package:mybooks/screens/misc/notificationsScreen.dart';
 import 'package:mybooks/screens/misc/settingsScreen.dart';
 
-const iconColor = Colors.deepPurple;
-
 class DrawerItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -72,7 +70,7 @@ class DrawerItems extends StatelessWidget {
         ListTile(
           leading: Icon(
             Icons.text_rotate_vertical,
-            color: iconColor,
+            color: Theme.of(context).primaryColor,
           ),
           title: Text('Definitions'),
           onTap: () => navToDefinitions(),
@@ -80,7 +78,7 @@ class DrawerItems extends StatelessWidget {
         ListTile(
           leading: Icon(
             Icons.notifications,
-            color: iconColor,
+            color: Theme.of(context).primaryColor,
           ),
           title: Text('Notifications'),
           onTap: () => navToNotifications(),
@@ -88,7 +86,7 @@ class DrawerItems extends StatelessWidget {
         ListTile(
           leading: Icon(
             Icons.person,
-            color: iconColor,
+            color: Theme.of(context).primaryColor,
           ),
           title: Text('Settings'),
           onTap: () => navToSettings(),
@@ -100,7 +98,7 @@ class DrawerItems extends StatelessWidget {
             color: Colors.red,
           ),
           title: Text('Logout'),
-          onTap: () => {logout()},
+          onTap: () => logout(),
         ),
       ],
     );

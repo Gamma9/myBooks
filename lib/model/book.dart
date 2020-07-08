@@ -16,7 +16,7 @@ class Book {
   String imageUrl;
   String datePublished;
   bool isCompleted;
-  Category category;
+  String category;
   String categoryStr;
   int pages;
   List<Definition> definitions;
@@ -39,8 +39,36 @@ class Book {
     @required this.pages,
   });
 
-  void set bookCategory(Category newCategory) {
-    this.category = newCategory;
+  set setCategory(Category newCategory) {
+    switch (newCategory) {
+      case Category.Business:
+        {
+          this.category = 'business';
+        }
+        break;
+      case Category.Fiction:
+        {
+          this.category = 'fiction';
+        }
+        break;
+      case Category.Nonfiction:
+        {
+          this.category = 'nonfiction';
+        }
+        break;
+      case Category.SelfHelp:
+        {
+          this.category = 'selfhelp';
+        }
+        break;
+      case Category.Thriller:
+        {
+          this.category = 'thriller';
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   void set bookSummary(String newSummary) {

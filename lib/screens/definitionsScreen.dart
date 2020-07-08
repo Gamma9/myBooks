@@ -12,16 +12,12 @@ import 'package:provider/provider.dart';
 class DefinitionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final definitionsProvider = Provider.of<DefinitionsProvider>(context);
-    final definitions = definitionsProvider.allDefinitions;
     return Scaffold(
       appBar: AppBar(
         title: Text('Definitions'),
         centerTitle: true,
       ),
-      body: definitions.length <= 0
-          ? NoDefinitions()
-          : BookDefinitionsList(definitions),
+      body: BookDefinitionsList(),
     );
   }
 }

@@ -34,7 +34,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
         _isLoading = true;
       });
 
-      Provider.of<LibraryProvider>(context).fetchAndSetBooks().then((_) => {});
+      Provider.of<LibraryProvider>(context).fetchAndSetBooks();
       setState(() {
         _isLoading = false;
       });

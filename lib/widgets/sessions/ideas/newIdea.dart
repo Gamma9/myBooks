@@ -27,7 +27,7 @@ class _NewIdeaState extends State<NewIdea> {
         title: title,
         body: thoughtBody,
       );
-      this.widget._ideas.add(newIdea);
+      sessionsProvider.addNewIdea(newIdea);
       Navigator.of(context).pop();
     }
 

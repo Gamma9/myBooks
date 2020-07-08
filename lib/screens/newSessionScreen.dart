@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:mybooks/model/book.dart';
@@ -6,6 +8,7 @@ import 'package:mybooks/model/session.dart' as Status;
 import 'package:mybooks/providers/sessions.provider.dart';
 import 'package:mybooks/screens/homeScreen.dart';
 import 'package:mybooks/screens/readingSessionDetailScreen.dart';
+import 'package:mybooks/screens/readingSessionsScreen.dart';
 import 'package:provider/provider.dart';
 
 class NewSessionScreen extends StatelessWidget {
@@ -16,13 +19,17 @@ class NewSessionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sessionsProvider = Provider.of<SessionsProvider>(context);
+    final timestamp = DateTime.now();
     final newSession = Session(
+      title: this.book.title,
       running: false,
       duration: 0,
-      timestamp: DateTime.now(),
-      end: null,
+      timestamp: timestamp,
+      start: '',
+      end: '',
       totalPagesRead: 0,
-      start: DateTime.now(),
+      stopwatch: new Stopwatch(),
+      status: '',
       isCompleted: false,
       book: this.book,
       ideas: [],
@@ -49,7 +56,7 @@ class NewSessionScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 42),
                     ),
                     Text(
-                      newSession.book.title,
+                      newSession.title,
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     )
                   ],
@@ -101,7 +108,9 @@ class NewSessionScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text('Session #'),
-                                  Text('NEW'),
+                                  Text('NEW')
+                                  // Text(sessionsProvider.allSessions.length
+                                  //     .toString()),
                                 ],
                               ),
                               Row(
@@ -109,7 +118,7 @@ class NewSessionScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text('Pages'),
-                                  Text(newSession.book.pages.toString()),
+                                  Text(newSession.totalPagesRead.toString()),
                                 ],
                               ),
                               Row(
@@ -154,7 +163,7 @@ class NewSessionScreen extends StatelessWidget {
                                 children: <Widget>[
                                   Text('Pages read'),
                                   Text(
-                                    '0',
+                                    newSession.totalPagesRead.toString(),
                                   ),
                                 ],
                               ),
@@ -195,8 +204,8 @@ class NewSessionScreen extends StatelessWidget {
                         children: <Widget>[
                           Text(newSession.book.title),
                           Text(newSession.book.author),
-                          Text(newSession.book.category.toString()),
-                          Text(newSession.book.pages.toString())
+                          Text(newSession.book.category),
+                          Text(newSession.book.pages.toString()),
                         ],
                       ),
                     ),

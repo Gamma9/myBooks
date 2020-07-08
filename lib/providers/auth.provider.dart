@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:mybooks/model/user.dart';
 
 class AuthProvider with ChangeNotifier {
+  String _token;
+  DateTime _expDate;
+  String _userId;
+
   bool isAuth = false;
   final User user = User(
     readingSessions: [],
@@ -34,17 +41,20 @@ class AuthProvider with ChangeNotifier {
   Future<void> signup(
     String firstname,
     String lastname,
-    String username,
+    String email,
     String password,
-  ) {
-    if (username != null || username.isNotEmpty) {
-      if (password != null || password.isNotEmpty) {
-        print(
-            'New User! \n\nfirstname: ${firstname}\nlastname: ${lastname}\nusername: ${username} password: ${password}');
-        isAuth = true;
-      }
-    } else {}
-    // https://something-firebase.firebaseio.com/myBooks-2a235';
-    // this.http.post(ur
+  ) async {
+    const url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDrUxNx8x4CwqqbjI4qDH_gbw1xNbXt7UE';
+
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'email': email,
+        'password': password,
+        'returnSecureToken': true,
+      }),
+    );
+    print(json.decode(response.body));
   }
 }

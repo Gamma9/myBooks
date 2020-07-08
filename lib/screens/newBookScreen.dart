@@ -8,33 +8,35 @@ import 'package:mybooks/providers/library.provider.dart';
 // Model
 import 'package:mybooks/model/book.dart';
 
+// enum Category { Thriller, Business, Fiction, Nonfiction, Selfhelp }
+
 class NewBook extends StatefulWidget {
   @override
   _NewBookState createState() => _NewBookState();
 }
 
 class _NewBookState extends State<NewBook> {
+  final _titleFocusNode = FocusNode();
   final _authorFocusNode = FocusNode();
   final _summaryFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
+  bool isLoading = false;
   Book book = Book(
     id: '',
     title: '',
     author: '',
     datePublished: '',
-    category: null,
+    category: '',
     imageUrl: '',
     pages: 0,
   );
-  bool isLoading = false;
-  Category bookCategory;
 
-  List<Category> categories = [
-    Category.Nonfiction,
-    Category.SelfHelp,
-    Category.Thriller,
-    Category.Business,
-    Category.Fiction,
+  List<String> categories = [
+    "Nonfiction",
+    "Fiction",
+    "Thriller",
+    "Business",
+    "Selfhelp"
   ];
 
   void _showPageNumPicker() {
@@ -79,6 +81,7 @@ class _NewBookState extends State<NewBook> {
       title: this.book.title,
       author: this.book.author,
       category: this.book.category,
+      isCompleted: this.book.isCompleted,
       datePublished: this.book.datePublished,
       pages: this.book.pages,
       ideas: '',
@@ -114,15 +117,41 @@ class _NewBookState extends State<NewBook> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  height: 150,
                   decoration: BoxDecoration(
                     border: Border.all(color: Theme.of(context).primaryColor),
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: Center(
-                    child: Icon(
-                      Icons.photo,
-                      color: Theme.of(context).primaryColor,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 64, vertical: 0),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 150,
+                          child: this.book.imageUrl.isEmpty
+                              ? Center(child: CircularProgressIndicator())
+                              : FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: Image.network(this.book.imageUrl),
+                                ),
+                        ),
+                        TextFormField(
+                          decoration:
+                              InputDecoration(labelText: 'Image URL...'),
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (imageUrl) {
+                            setState(() {
+                              this.book.imageUrl = imageUrl;
+                            });
+                            FocusScope.of(context)
+                                .requestFocus(this._titleFocusNode);
+                          },
+                          onSaved: (imageUrl) {
+                            setState(() {
+                              this.book.imageUrl = imageUrl;
+                            });
+                          },
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -132,31 +161,54 @@ class _NewBookState extends State<NewBook> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    DropdownButton<Category>(
-                      value: this.book.category,
-                      hint: Text('Category'),
-                      icon: Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: this.book.category != null
+                            ? Theme.of(context).primaryColor
+                            : null,
                       ),
-                      onChanged: (Category newValue) {
+                      child: Text(
+                        this.book.category.isEmpty
+                            ? 'Pick category...'
+                            : this.book.category,
+                        style: TextStyle(
+                            color: this.book.category != null
+                                ? Colors.white
+                                : null),
+                      ),
+                    ),
+                    PopupMenuButton<Category>(
+                      onSelected: (Category result) {
                         setState(() {
-                          this.book.category = newValue;
-                          print(this.book.category);
+                          this.book.setCategory = result;
                         });
                       },
-                      items: this.categories.map<DropdownMenuItem<Category>>(
-                        (Category value) {
-                          return DropdownMenuItem<Category>(
-                            value: value,
-                            child: Text(value.toString()),
-                          );
-                        },
-                      ).toList(),
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<Category>>[
+                        const PopupMenuItem<Category>(
+                          value: Category.Fiction,
+                          child: Text('Fiction'),
+                        ),
+                        const PopupMenuItem<Category>(
+                          value: Category.Nonfiction,
+                          child: Text('Nonfiction'),
+                        ),
+                        const PopupMenuItem<Category>(
+                          value: Category.SelfHelp,
+                          child: Text('Self Help'),
+                        ),
+                        const PopupMenuItem<Category>(
+                          value: Category.Business,
+                          child: Text('Business'),
+                        ),
+                        const PopupMenuItem<Category>(
+                          value: Category.Thriller,
+                          child: Text('Thriller'),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       width: 16,
@@ -182,6 +234,7 @@ class _NewBookState extends State<NewBook> {
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: TextFormField(
+                      focusNode: _titleFocusNode,
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context)
@@ -268,3 +321,4 @@ class _NewBookState extends State<NewBook> {
     );
   }
 }
+// https://catalystmagazine.net/wp-content/uploads/2013/11/Screen-Shot-2019-01-15-at-2.19.50-PM.png

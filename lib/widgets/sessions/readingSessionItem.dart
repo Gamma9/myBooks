@@ -4,13 +4,11 @@ import 'package:mybooks/screens/readingSessionDetailScreen.dart';
 
 class ReadingSessionItem extends StatelessWidget {
   final Session session;
-  final int index;
-  ReadingSessionItem(this.session, this.index);
 
+  ReadingSessionItem(this.session);
   void viewReadingSessionDetails(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(builder: (_) {
-        final index = this.index + 1;
         return ReadingSessionDetailScreen(this.session);
       }),
     );
@@ -51,7 +49,7 @@ class ReadingSessionItem extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
             title: Text(
-              this.session.bookTitle,
+              this.session.book.title.toString(),
               style: TextStyle(
                   color: this.session.running == true ? Colors.white : null),
             ),

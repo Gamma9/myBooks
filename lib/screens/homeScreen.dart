@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurple,
+        selectedItemColor: Theme.of(context).primaryColorDark,
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(

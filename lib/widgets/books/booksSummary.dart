@@ -29,10 +29,9 @@ class _BooksSummaryState extends State<BooksSummary> {
     final libraryProvider = Provider.of<LibraryProvider>(context);
     final definitionsProvider = Provider.of<DefinitionsProvider>(context);
     int totalBooksRead = libraryProvider.getAllBooks.length;
-    int totalPagesRead = libraryProvider
-        .allBooksRead.length; // Need to grab pages for each element in array
+    int totalPagesRead = libraryProvider.totalPagesRead;
     int totalDefinitions = definitionsProvider.allDefinitions.length;
-    // String longestBookRead = booksProvider.longestBookRead.title;
+    String longestBookRead = libraryProvider.longestBookRead;
     String favCategory = libraryProvider.favCategory;
     return Container(
       child: Column(
@@ -53,9 +52,7 @@ class _BooksSummaryState extends State<BooksSummary> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text('Total Books Read'),
-                    Text(totalBooksRead == null
-                        ? '0'
-                        : totalBooksRead.toString()),
+                    Text(totalBooksRead.toString()),
                   ],
                 ),
                 SizedBox(
@@ -65,9 +62,9 @@ class _BooksSummaryState extends State<BooksSummary> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text('Total Pages Read'),
-                    Text(totalPagesRead == null
-                        ? '0'
-                        : totalPagesRead.toString()),
+                    Text(
+                      totalPagesRead <= 0 ? '0' : totalPagesRead.toString(),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -89,11 +86,7 @@ class _BooksSummaryState extends State<BooksSummary> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text('Longest Book Read'),
-                    Text('No Books Read'
-                        // longestBookRead == null
-                        //     ? 'No books read'
-                        //     : longestBookRead,
-                        ),
+                    Text(longestBookRead),
                   ],
                 ),
                 SizedBox(

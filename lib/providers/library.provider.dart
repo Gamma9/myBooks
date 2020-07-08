@@ -14,7 +14,24 @@ class LibraryProvider with ChangeNotifier {
   }
 
   List<Book> get getAllBooks {
+    // this.fetchAndSetBooks();
     return [...this._books];
+  }
+
+  // TODO: Implement total pages read
+  int get totalPagesRead {
+    int totalPages = 0;
+    // this._books.forEach((element) {
+    //   if (this._books != null) {
+    //     if (element.pages != null && element.isCompleted == true) {
+    //       totalPages += element.pages;
+    //     }
+    //   } else {
+    //     print('Called totalPagesRead on null books');
+    //     return;
+    //   }
+    // });
+    return totalPages;
   }
 
   List<Book> get allBooksRead {
@@ -33,13 +50,19 @@ class LibraryProvider with ChangeNotifier {
     return allDefinitions;
   }
 
-  Book get longestBookRead {
-    Book longestBook;
-    this._books.forEach((element) {
-      if (element.isCompleted == true && element.pages > longestBook.pages) {
-        longestBook = element;
-      }
-    });
+  String get longestBookRead {
+    var longestBook = 'Test';
+    // this._books.forEach((element) {
+    //   if (element.isCompleted == true && element.pages > longestBook.pages) {
+    //     longestBook = element;
+    //     print('New Longest Book: ${element.title} - ${element.pages} pages');
+    //   } else {
+    //     longestBook = longestBook;
+    //     print(
+    //         'No new book: ${element.title} is still the longest book you have read with ${element.pages} pages');
+    //   }
+    // });
+    // return longestBook.title;
     return longestBook;
   }
 
@@ -68,36 +91,6 @@ class LibraryProvider with ChangeNotifier {
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Book> loadedBooks = [];
       extractedData.forEach((bookId, bookData) {
-        var bookCategory;
-        var bookStatus;
-        switch (bookData['category']) {
-          case Category.Nonfiction:
-            {
-              bookCategory = 'Nonfiction';
-            }
-            break;
-          case Category.Business:
-            {
-              bookCategory = 'Business';
-            }
-            break;
-          case Category.SelfHelp:
-            {
-              bookCategory = 'Self-Help';
-            }
-            break;
-          case Category.Thriller:
-            {
-              bookCategory = 'Thriller';
-            }
-            break;
-          case Category.Fiction:
-            {
-              bookCategory = 'Fiction';
-            }
-            break;
-        }
-
         loadedBooks.add(
           Book(
             id: bookId,
@@ -105,8 +98,9 @@ class LibraryProvider with ChangeNotifier {
             title: bookData['title'],
             author: bookData['author'],
             datePublished: bookData['datePublished'],
+            isCompleted: bookData['isCompleted'],
             pages: bookData['pages'],
-            category: bookCategory,
+            category: bookData['category'],
             summary: bookData['summary'],
             definitions: bookData['definitions'],
             notes: bookData['notes'],
@@ -124,44 +118,17 @@ class LibraryProvider with ChangeNotifier {
   void addNewBook(Book book) {
     const url = 'https://mybooks-2e36f.firebaseio.com/books.json';
 
-    switch (book.category) {
-      case Category.Nonfiction:
-        {
-          book.categoryStr = 'Nonfiction';
-        }
-        break;
-      case Category.Business:
-        {
-          book.categoryStr = 'Business';
-        }
-        break;
-      case Category.SelfHelp:
-        {
-          book.categoryStr = 'Self-Help';
-        }
-        break;
-      case Category.Thriller:
-        {
-          book.categoryStr = 'Thriller';
-        }
-        break;
-      case Category.Fiction:
-        {
-          book.categoryStr = 'Fiction';
-        }
-        break;
-    }
-
     http
         .post(
       url,
       body: json.encode({
         'title': book.title,
         'author': book.author,
-        'imageUrl': 'Testing',
+        'imageUrl': book.imageUrl,
         'pages': book.pages,
         'datePublished': book.datePublished,
-        'category': book.categoryStr,
+        'isCompleted': book.isCompleted,
+        'category': book.category,
         'summary': book.summary,
         'ideas': book.ideas,
         'notes': book.notes,
@@ -173,6 +140,7 @@ class LibraryProvider with ChangeNotifier {
         id: json.decode(response.body)['name'],
         title: book.title,
         imageUrl: book.imageUrl,
+        isCompleted: book.isCompleted,
         author: book.author,
         pages: book.pages,
         datePublished: book.datePublished,

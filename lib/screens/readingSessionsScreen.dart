@@ -36,7 +36,13 @@ class _ReadingSessionsScreenState extends State<ReadingSessionsScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<SessionsProvider>(context).fetchAndSetAllSessions();
+      Provider.of<SessionsProvider>(context)
+          .fetchAndSetAllSessions()
+          .then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
     _isInit = false;
     // TODO: implement didChangeDependencies
@@ -45,8 +51,8 @@ class _ReadingSessionsScreenState extends State<ReadingSessionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final sessionsProvider = Provider.of<SessionsProvider>(context);
-    final sessions = sessionsProvider.allSessions;
+    // final sessionsProvider = Provider.of<SessionsProvider>(context);
+    // final sessions = sessionsProvider.allSessions;
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16),
@@ -77,12 +83,10 @@ class _ReadingSessionsScreenState extends State<ReadingSessionsScreen> {
                     SizedBox(
                       height: 16,
                     ),
-                    sessions == null
-                        ? NoSessions()
-                        : Container(
-                            height: 400,
-                            child: ReadingSessionsList(sessions),
-                          ),
+                    Container(
+                      height: 400,
+                      child: ReadingSessionsList(),
+                    ),
                   ],
                 ),
               ),

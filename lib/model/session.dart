@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mybooks/model/book.dart';
 import 'package:mybooks/model/definition.dart';
@@ -9,14 +11,18 @@ enum Status { Active, Nonactive, Completed }
 class Session {
   String id;
   Book book; // String id of corresponding book
+  String title;
   bool running;
+  Timer timer;
+  Stopwatch stopwatch;
   DateTime timestamp;
-  DateTime start;
-  DateTime end;
-  int duration; // In Seconds for conversion
+  String start;
+  String end;
+  int duration;
+  String durationStr; // In Seconds for conversion
   int totalPagesRead = 0;
   bool isCompleted = false;
-  Status status; // Is session active, completed, or not started
+  String status; // Is session active, completed, or not started
   Category category; // Book Category
   List<Idea> ideas;
   List<Note> notes;
@@ -25,10 +31,14 @@ class Session {
   Session({
     @required this.id,
     @required this.book,
+    @required this.title,
     @required this.duration,
+    @required this.timer,
+    @required this.stopwatch,
     @required this.timestamp,
     @required this.totalPagesRead,
     @required this.isCompleted,
+    @required this.category,
     @required this.status,
     @required this.start,
     @required this.end,
@@ -36,79 +46,42 @@ class Session {
     this.ideas,
     this.notes,
     this.definitions,
-  });
-
-  String get bookTitle {
-    return this.book.title;
+  }) {
+    this.title = this.book.title;
   }
 
   String get sessionTimestamp {
     return this.timestamp.toString();
   }
 
-  String get bookCategory {
-    switch (this.category) {
-      case Category.Nonfiction:
-        {
-          return 'Nonfiction';
-        }
-        break;
-      case Category.Business:
-        {
-          return 'Business';
-        }
-        break;
-      case Category.SelfHelp:
-        {
-          return 'Self-Help';
-        }
-        break;
-      case Category.Thriller:
-        {
-          return 'Thriller';
-        }
-        break;
-      case Category.Fiction:
-        {
-          return 'Fiction';
-        }
-        break;
-      default:
-        return 'N/A';
-    }
-  }
-
-  String get bookStatus {
-    switch (this.status) {
-      case Status.Active:
-        {
-          return 'Active';
-        }
-        break;
-      case Status.Completed:
-        {
-          return 'Completed';
-        }
-        break;
-      case Status.Nonactive:
-        {
-          return 'Nonactive';
-        }
-        break;
-      default:
-        return 'N/A';
-    }
-  }
-
-  void set newCategory(Category newCategory) {
+  set newCategory(Category newCategory) {
     this.category = newCategory;
   }
 
-  void set newStatus(Status newStatus) {
-    this.status = newStatus;
+  String get startWatch {
+    this.stopwatch.start();
+    this.start = DateTime.now().toString();
+    this.running = true;
+    this.duration = this.stopwatch.elapsed.inMinutes;
+    final stopwatchStr = this.stopwatch.elapsed.inMinutes.toString();
+    print('Start Time: ' +
+        this.start +
+        '\nTime Elapsed: ' +
+        stopwatchStr +
+        ' Minutes');
+    return stopwatchStr;
   }
 
-  void set endSession(DateTime halt) {
-    this.end = halt;
+  String get endWatch {
+    this.stopwatch.stop();
+    this.end = DateTime.now().toString();
+    this.duration = this.stopwatch.elapsed.inMinutes;
+    final stopwatchStr = this.stopwatch.elapsed.inMinutes.toString();
+    print('End Time: ' +
+        this.end +
+        '\nTime Elapsed: ' +
+        stopwatchStr +
+        ' Minutes');
+    return stopwatchStr;
   }
 }

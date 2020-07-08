@@ -20,9 +20,8 @@ class _NewDefinitionState extends State<NewDefinition> {
 
   @override
   Widget build(BuildContext context) {
-    final sessionsProvider = Provider.of<SessionsProvider>(context);
+    // final sessionsProvider = Provider.of<SessionsProvider>(context);
     final definitionsProvider = Provider.of<DefinitionsProvider>(context);
-    final definitions = definitionsProvider.allDefinitions;
 
     void addNewDefinition(String title, String definition) {
       int encounters = 0;
@@ -32,7 +31,8 @@ class _NewDefinitionState extends State<NewDefinition> {
         description: definition,
         encounters: encounters,
       );
-      definitions.add(newDef);
+      // sessionsProvider.currentSession.definitions.add(newDef);
+      definitionsProvider.addNewDefinition(newDef);
     }
 
     return Container(

@@ -29,9 +29,12 @@ class BookDetailScreen extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             child: Center(
-              child: Icon(
-                Icons.photo,
-                color: Colors.white,
+              child: Container(
+                height: 175,
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: Image.network(this.book.imageUrl),
+                ),
               ),
             ),
           ),

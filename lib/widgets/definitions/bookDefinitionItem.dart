@@ -21,17 +21,17 @@ class BookDefinitionItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              // Text(
-              //   this.definition.title,
-              //   style: TextStyle(
-              //     fontSize: 18,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
+              Text(
+                this.definition.title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Text('Encounters: ${this.definition.encounters.toString()}'),
             ],
           ),
-          // Text(this.definition.description)
+          Text(this.definition.description)
         ],
       ),
     );

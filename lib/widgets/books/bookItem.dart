@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // Models
 import 'package:mybooks/model/book.dart';
 import 'package:mybooks/screens/bookDetailScreen.dart';
+import 'package:mybooks/widgets/misc/ratingStars.dart';
 
 class BookItem extends StatelessWidget {
   final Book book;
@@ -41,11 +42,8 @@ class BookItem extends StatelessWidget {
                           )
                         : FittedBox(
                             fit: BoxFit.cover,
-                            child: Center(
-                              child: Icon(Icons.check),
-                            )
-                            // child: Image.network(this.book.imageUrl),
-                            ),
+                            child: Image.network(this.book.imageUrl),
+                          ),
                   ),
                 ),
                 onTap: () => navToBookDetail(context, this.book),
@@ -73,15 +71,12 @@ class BookItem extends StatelessWidget {
                             style: TextStyle(fontSize: 18),
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 4,
                           ),
                           Text('${this.book.pages.toString()} pages'),
                           Text(this.book.category == null
                               ? 'No Category'
                               : this.book.category.toString()),
-                          Text(this.book.pages == null
-                              ? 'No Pages'
-                              : this.book.pages.toString()),
                         ],
                       ),
                     ),
@@ -91,9 +86,6 @@ class BookItem extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 16,
-          )
         ],
       ),
     );

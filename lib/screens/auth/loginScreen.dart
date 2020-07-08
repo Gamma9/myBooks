@@ -10,9 +10,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String username;
+  String email;
   String password;
   bool isLoading = false;
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
   final passwordFocusNode = FocusNode();
 
   void login(BuildContext ctx) {
@@ -20,13 +22,13 @@ class _LoginScreenState extends State<LoginScreen> {
       this.isLoading = true;
     });
     Provider.of<AuthProvider>(ctx, listen: false)
-        .login(this.username, this.password)
+        .login(this.email, this.password)
         .then(
           (user) => {
             setState(() {
               this.isLoading = false;
             }),
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (_) {
                   return HomeScreen();
@@ -38,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navToSignup(BuildContext ctx) {
-    Navigator.of(ctx).push(
+    Navigator.of(ctx).pushReplacement(
       MaterialPageRoute(builder: (_) {
         return SignupScreen();
       }),
@@ -71,16 +73,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextFormField(
                         decoration: InputDecoration(
-                          labelText: 'Username',
+                          labelText: 'Email',
                           hoverColor: Theme.of(context).primaryColor,
                         ),
+                        keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context)
                               .requestFocus(this.passwordFocusNode);
                         },
-                        onSaved: (username) {
-                          this.username = username;
+                        onSaved: (newEmail) {
+                          this.email = newEmail;
                         },
                       ),
                       TextFormField(

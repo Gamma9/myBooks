@@ -9,6 +9,7 @@ class DefinitionsProvider with ChangeNotifier {
   List<Definition> _definitions = [];
 
   List<Definition> get allDefinitions {
+    // this.fetchAndSetDefinitions();
     return [...this._definitions];
   }
 

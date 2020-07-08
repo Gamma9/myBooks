@@ -12,42 +12,52 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final _form = GlobalKey<FormState>();
   final lastNameFocusNode = FocusNode();
-  final usernameFocusNode = FocusNode();
+  final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
+  // final firstnameTextController = TextEditingController();
+  // final lastnameTextController = TextEditingController();
+  // final emailTextController = TextEditingController();
+  // final passwordTextController = TextEditingController();
 
-  String username;
+  String email;
   String password;
   String firstname;
   String lastname;
   bool isLoading = false;
 
-  void signup(BuildContext context) {
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+  };
+
+  void _onSignup(BuildContext context) {
+    this._form.currentState.save();
     setState(() {
       this.isLoading = true;
     });
     Provider.of<AuthProvider>(context, listen: false)
         .signup(
-          this.firstname,
-          this.lastname,
-          this.username,
-          this.password,
-        )
+      this.firstname,
+      this.lastname,
+      _authData['email'],
+      _authData['password'],
+    )
         .then(
-          (value) => {
-            setState(() {
-              this.isLoading = false;
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) {
-                  return HomeScreen();
-                }),
-              );
-            })
-          },
+      (_) {
+        setState(() {
+          this.isLoading = false;
+        });
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) {
+            return HomeScreen();
+          }),
         );
+      },
+    );
   }
 
   void navToLogin(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
       return LoginScreen();
     }));
   }
@@ -61,14 +71,6 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // CircleAvatar(
-              //   radius: 52,
-              //   child: Icon(
-              //     Icons.bookmark,
-              //     size: 36,
-              //   ),
-              //   backgroundColor: Theme.of(context).primaryColor,
-              // ),
               Text(
                 'My Books',
                 style: TextStyle(
@@ -114,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               textInputAction: TextInputAction.next,
                               onFieldSubmitted: (_) {
                                 FocusScope.of(context)
-                                    .requestFocus(this.usernameFocusNode);
+                                    .requestFocus(this.emailFocusNode);
                               },
                               onSaved: (lastname) {
                                 this.lastname = lastname;
@@ -124,22 +126,24 @@ class _SignupScreenState extends State<SignupScreen> {
                         ],
                       ),
                       TextFormField(
+                        focusNode: this.emailFocusNode,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          labelText: 'Username',
+                          labelText: 'Email',
                           hoverColor: Theme.of(context).primaryColor,
                         ),
-                        focusNode: this.usernameFocusNode,
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
                           FocusScope.of(context)
                               .requestFocus(this.passwordFocusNode);
                         },
-                        onSaved: (username) {
-                          this.username = username;
+                        onSaved: (email) {
+                          this.email = email;
                         },
                       ),
                       TextFormField(
                         focusNode: this.passwordFocusNode,
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           hoverColor: Theme.of(context).primaryColor,
@@ -156,15 +160,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         color: Theme.of(context).primaryColor,
                         hoverColor: Theme.of(context).primaryColor,
                         textColor: Colors.white,
-                        onPressed: () => {
-                          this._form.currentState.save(),
-                          signup(context),
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => HomeScreen(),
-                            ),
-                          ),
-                        },
+                        onPressed: () => _onSignup(context),
                       ),
                       SizedBox(
                         height: 32,

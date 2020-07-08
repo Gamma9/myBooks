@@ -16,6 +16,7 @@ class _NewNoteState extends State<NewNote> {
   final _newNoteForm = GlobalKey<FormState>();
 
   String title;
+
   String body;
 
   @override
@@ -28,7 +29,7 @@ class _NewNoteState extends State<NewNote> {
         title: this.title,
         body: this.body,
       );
-      this.widget._notes.add(newNote);
+      sessionsProvider.addNewNote(newNote);
       Navigator.of(context).pop();
     }
 
@@ -62,9 +63,9 @@ class _NewNoteState extends State<NewNote> {
                 RaisedButton(
                   color: Theme.of(context).primaryColor,
                   textColor: Colors.white,
-                  onPressed: () => {
-                    this._newNoteForm.currentState.save(),
-                    addNewNote(this.title, this.body)
+                  onPressed: () {
+                    this._newNoteForm.currentState.save();
+                    addNewNote(this.title, this.body);
                   },
                   child: Text('Submit'),
                 ),
