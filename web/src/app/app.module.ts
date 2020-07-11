@@ -5,7 +5,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { MDBBootstrapModule } from "angular-bootstrap-md";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
-
 import { AppComponent } from "./app.component";
 
 @NgModule({
@@ -14,8 +13,8 @@ import { AppComponent } from "./app.component";
     BrowserModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
-    FormsModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
