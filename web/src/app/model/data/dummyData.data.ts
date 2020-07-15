@@ -1,0 +1,62 @@
+import { Book } from "../book.model";
+import { User } from "../user.model";
+
+export const DUMMY_BOOKS_LIST: Book[] = [
+  {
+    id: "",
+    imageUrl: "",
+    title: "",
+    author: "",
+    summary: "",
+    category: "",
+    datePublished: "",
+    isCompleted: false,
+    pages: 0,
+    ideas: [],
+    notes: [],
+    definitions: [],
+  },
+  {
+    id: "",
+    imageUrl: "",
+    title: "",
+    author: "",
+    summary: "",
+    category: "",
+    datePublished: "",
+    isCompleted: false,
+    pages: 0,
+    ideas: [],
+    notes: [],
+    definitions: [],
+  },
+  {
+    id: "",
+    imageUrl: "",
+    title: "",
+    author: "",
+    summary: "",
+    category: "",
+    datePublished: "",
+    isCompleted: false,
+    pages: 0,
+    ideas: [],
+    notes: [],
+    definitions: [],
+  },
+];
+
+export const DUMMY_USER: User = {
+  id: "",
+  imageUrl: "",
+  firstname: "",
+  lastname: "",
+  username: "",
+  books: [...DUMMY_BOOKS_LIST],
+  booksRead: [],
+  favCategory: "",
+  dob: "",
+  readingSessions: [],
+  definitions: [],
+  favBook: "",
+};

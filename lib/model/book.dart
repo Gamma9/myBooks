@@ -17,7 +17,7 @@ class Book {
   String datePublished;
   bool isCompleted;
   String category;
-  String categoryStr;
+  // String categoryStr;
   int pages;
   List<Definition> definitions;
   String summary;
